@@ -1,35 +1,31 @@
+# LSTM-based prediction service (placeholder)
 import torch
 import torch.nn as nn
-import torch.optim as optim
-from torch.utils.data import DataLoader, TensorDataset
 import numpy as np
+from typing import List
 
 class LSTMModel(nn.Module):
-    def __init__(self, input_dim, hidden_dim, num_layers, output_dim):
+    def __init__(self, input_size: int, hidden_size: int, num_layers: int, output_size: int):
         super().__init__()
-        self.lstm = nn.LSTM(input_dim, hidden_dim, num_layers, batch_first=True)
-        self.fc = nn.Linear(hidden_dim, output_dim)
+        self.lstm = nn.LSTM(input_size, hidden_size, num_layers, batch_first=True)
+        self.fc = nn.Linear(hidden_size, output_size)
 
     def forward(self, x):
         out, _ = self.lstm(x)
         out = self.fc(out[:, -1, :])
         return out
 
-async def predict_energy():
-    # Dummy data for illustration
-    seq_len = 24
-    input_dim = 1
-    hidden_dim = 32
-    num_layers = 2
-    output_dim = 1
+# Dummy training function
+def train_dummy_model():
+    model = LSTMModel(1, 32, 2, 1)
+    # Normally you would train here
+    return model
 
-    model = LSTMModel(input_dim, hidden_dim, num_layers, output_dim)
-    # Normally load trained weights
-    # model.load_state_dict(torch.load("model.pth"))
-    model.eval()
-
-    # Dummy input
-    dummy_input = torch.randn(1, seq_len, input_dim)
+# Prediction function
+async def predict_energy_consumption(past_data: List[float]) -> float:
+    model = train_dummy_model()
+    # Convert to tensor
+    seq = torch.tensor(past_data, dtype=torch.float32).unsqueeze(0).unsqueeze(-1)
     with torch.no_grad():
-        pred = model(dummy_input)
-    return {"predicted_energy_kwh": pred.item()}
+        pred = model(seq)
+    return pred.item()

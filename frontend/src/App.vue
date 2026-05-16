@@ -2,10 +2,20 @@
   <router-view />
 </template>
 
-<script setup lang="ts">
-import { createApp } from 'vue';
-import App from './App.vue';
-import router from './router';
+<script setup>
+import { createRouter, createWebHistory } from 'vue-router'
+import EnergyDashboard from './components/EnergyDashboard.vue'
+import MaintenanceSchedule from './components/MaintenanceSchedule.vue'
+import SafetyReport from './components/SafetyReport.vue'
 
-createApp(App).use(router).mount('#app');
+const routes = [
+  { path: '/', component: EnergyDashboard },
+  { path: '/maintenance', component: MaintenanceSchedule },
+  { path: '/safety', component: SafetyReport }
+]
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+})
 </script>

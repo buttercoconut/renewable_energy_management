@@ -1,26 +1,10 @@
 <template>
-  <div class="maintenance">
+  <div>
     <h2>Maintenance Schedule</h2>
+    <!-- Placeholder for schedule -->
     <ul>
-      <li v-for="item in schedule" :key="item.id">
-        {{ item.date }} - {{ item.task }}
-      </li>
+      <li>Plant 1: 2025-01-15</li>
+      <li>Plant 2: 2025-02-20</li>
     </ul>
   </div>
 </template>
-
-<script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
-
-const schedule = ref([]);
-
-onMounted(async () => {
-  const res = await axios.get('/api/maintenance/schedule');
-  schedule.value = res.data;
-});
-</script>
-
-<style scoped>
-.maintenance { padding: 1rem; }
-</style>

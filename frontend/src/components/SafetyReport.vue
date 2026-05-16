@@ -1,26 +1,10 @@
 <template>
-  <div class="safety">
-    <h2>Safety Incident Report</h2>
+  <div>
+    <h2>Safety Report</h2>
+    <!-- Placeholder for incidents -->
     <ul>
-      <li v-for="incident in incidents" :key="incident.id">
-        {{ incident.date }} - {{ incident.description }}
-      </li>
+      <li>Incident 1: Minor leak</li>
+      <li>Incident 2: Equipment failure</li>
     </ul>
   </div>
 </template>
-
-<script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
-
-const incidents = ref([]);
-
-onMounted(async () => {
-  const res = await axios.get('/api/safety/incidents');
-  incidents.value = res.data;
-});
-</script>
-
-<style scoped>
-.safety { padding: 1rem; }
-</style>

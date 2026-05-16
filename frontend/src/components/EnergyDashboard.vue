@@ -1,23 +1,32 @@
 <template>
-  <div class="dashboard">
-    <h2>Energy Production Forecast</h2>
-    <LineChart :data="forecastData" />
+  <div>
+    <h2>Energy Dashboard</h2>
+    <!-- Placeholder for chart -->
+    <canvas id="energyChart"></canvas>
   </div>
 </template>
+<script setup>
+import { ref, onMounted } from 'vue'
+import Chart from 'chart.js/auto'
 
-<script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
-import LineChart from './LineChart.vue';
+const chartRef = ref(null)
 
-const forecastData = ref(null);
-
-onMounted(async () => {
-  const res = await axios.get('/api/energy/forecast');
-  forecastData.value = res.data;
-});
+onMounted(() => {
+  const ctx = document.getElementById('energyChart').getContext('2d')
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Jan', 'Feb', 'Mar'],
+      datasets: [{
+        label: 'Predicted Power (MW)',
+        data: [120, 150, 130],
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1
+      }]
+    }
+  })
+})
 </script>
-
 <style scoped>
-.dashboard { padding: 1rem; }
+canvas { width: 100%; height: 400px; }
 </style>

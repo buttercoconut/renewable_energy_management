@@ -1,8 +1,13 @@
-async def get_safety_report():
-    # Placeholder: return static incidents
-    return {
-        "incidents": [
-            {"id": 1, "facility_id": 1, "timestamp": "2024-06-20T10:15:00Z", "description": "Fall from scaffold", "severity": "Minor"},
-            {"id": 2, "facility_id": 2, "timestamp": "2024-06-22T14:30:00Z", "description": "Electrical shock", "severity": "Major"},
-        ]
-    }
+# Safety incident tracking service (placeholder)
+from datetime import datetime
+from typing import List
+
+class SafetyService:
+    def __init__(self):
+        self.incidents = []  # In-memory incidents list
+
+    def report_incident(self, facility_id: int, description: str, severity: str):
+        self.incidents.append({"facility_id": facility_id, "timestamp": datetime.utcnow(), "description": description, "severity": severity})
+
+    def get_incidents(self, facility_id: int) -> List[dict]:
+        return [i for i in self.incidents if i["facility_id"] == facility_id]

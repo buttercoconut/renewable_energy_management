@@ -1,5 +1,10 @@
 from fastapi import FastAPI
-from .routers import router
+from .routers import router as api_router
 
 app = FastAPI(title="Renewable Energy Management API")
-app.include_router(router)
+
+app.include_router(api_router)
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
